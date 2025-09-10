@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:7000',
-      '/uploads': 'http://localhost:7000',
+      '/api': 'https://school-backend-2-qiyf.onrender.com/api',
+      '/uploads': 'https://school-backend-2-qiyf.onrender.com/uploads',
     },
   },
 })

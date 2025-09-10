@@ -18,7 +18,7 @@ function StudentSignup() {
       if (value) data.append(key, value as any);
     });
     try {
-      const res = await fetch("http://localhost:7000/api/students/register", {
+      const res = await fetch("https://school-backend-2-qiyf.onrender.com/api/students/register", {
         method: "POST",
         body: data,
       });

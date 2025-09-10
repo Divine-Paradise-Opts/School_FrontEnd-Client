@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function Students() {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<any[]>([]);
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -12,51 +12,10 @@ function Students() {
   });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
-  const [editMode, setEditMode] = useState(false);
-  const [editForm, setEditForm] = useState<any | null>(null);
-  // Start editing a student
-  const handleEdit = (student: any) => {
-    setEditMode(true);
-    setEditForm({ ...student, profile: null });
-    setSelectedStudent(null);
-  };
-
-  // Handle edit form change
-  const handleEditChange = (e: any) => {
-    const { name, value, files } = e.target;
-    setEditForm((f: any) => ({ ...f, [name]: files ? files[0] : value }));
-  };
-
-  // Submit edit form
-  const handleEditSubmit = (e: any) => {
-    e.preventDefault();
-    if (!editForm) return;
-    setLoading(true);
-    setMessage("");
-    const data = new FormData();
-    Object.entries(editForm).forEach(([key, value]) => {
-      if (value && key !== "_id" && key !== "profilePic" && key !== "__v") data.append(key, value as any);
-    });
-    fetch(`http://localhost:7000/api/students/${editForm._id}`, {
-      method: "PUT",
-      body: data,
-    })
-      .then(async (res) => {
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.message || "Error");
-        setMessage("Student updated successfully.");
-        setEditMode(false);
-        setEditForm(null);
-        fetchStudents();
-      })
-      .catch(() => setMessage("Cannot update student. Please check your server and try again."))
-      .finally(() => setLoading(false));
-  };
 
   // Fetch students from backend
   const fetchStudents = () => {
-    fetch("http://localhost:7000/api/students")
+    fetch("https://school-backend-2-qiyf.onrender.com/api/students")
       .then((res) => res.json())
       .then((data) => setStudents(data));
   };
@@ -83,7 +42,7 @@ function Students() {
     Object.entries(form).forEach(([key, value]) => {
       if (value) data.append(key, value as any);
     });
-    fetch("http://localhost:7000/api/students/register", {
+    fetch("https://school-backend-2-qiyf.onrender.com/api/students/register", {
       method: "POST",
       body: data,
     })
@@ -98,13 +57,7 @@ function Students() {
       .finally(() => setLoading(false));
   };
 
-  // Delete student
-  const handleDelete = (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this student?")) return;
-    fetch(`http://localhost:7000/api/students/${id}`, { method: "DELETE" })
-      .then(res => res.json())
-      .then(() => fetchStudents());
-  };
+  // ...existing code...
 
   return (
     <div>

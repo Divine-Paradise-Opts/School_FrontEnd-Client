@@ -14,7 +14,7 @@ function StudentLogin({ onLogin }: Props) {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-    fetch("http://localhost:7000/api/students/login", {
+    fetch("https://school-backend-2-qiyf.onrender.com/api/students/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -30,7 +30,7 @@ function StudentLogin({ onLogin }: Props) {
           window.location.href = "/student/dashboard";
         }
       })
-      .catch((err) => setMessage("Invalid credentials or server error."))
+    .catch(() => setMessage("Invalid credentials or server error."))
       .finally(() => setLoading(false));
   };
 

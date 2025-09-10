@@ -25,7 +25,7 @@ function StudentList() {
   const [loadingEdit, setLoadingEdit] = useState(false);
 
   useEffect(() => {
-    fetch("/api/students")
+    fetch("https://school-backend-2-qiyf.onrender.com/api/students")
       .then((res) => res.json())
       .then((data) => {
         setStudents(data);
@@ -67,7 +67,7 @@ function StudentList() {
     Object.entries(editForm).forEach(([key, value]) => {
       if (value && key !== "_id" && key !== "profilePic" && key !== "__v") data.append(key, value as any);
     });
-    fetch(`/api/students/${editForm._id}`, {
+    fetch(`https://school-backend-2-qiyf.onrender.com/api/students/${editForm._id}`, {
       method: "PUT",
       body: data,
     })

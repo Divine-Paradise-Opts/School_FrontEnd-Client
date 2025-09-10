@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const heroBg = '/images/istockphoto-643591384-612x612.jpg';
 const galleryImages = [

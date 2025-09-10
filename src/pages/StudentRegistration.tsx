@@ -28,7 +28,7 @@ function StudentRegistration({ onRegister }: { onRegister: () => void }) {
     Object.entries(form).forEach(([key, value]) => {
       if (value) data.append(key, value as any);
     });
-    fetch("http://localhost:7000/api/students/register", {
+    fetch("https://school-backend-2-qiyf.onrender.com/api/students/register", {
       method: "POST",
       body: data,
     })
