@@ -41,7 +41,7 @@ function StudentList() {
   const handleDelete = (id?: string) => {
     if (!id) return;
     if (!window.confirm("Are you sure you want to delete this student?")) return;
-    fetch(`/api/students/${id}`, { method: "DELETE" })
+    fetch(`https://school-backend-2-qiyf.onrender.com/api/students/${id}`, { method: "DELETE" })
       .then(res => res.json())
       .then(() => setStudents(students.filter(s => s._id !== id)));
   };
