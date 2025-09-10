@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Students() {
-  const [students, setStudents] = useState<any[]>([]);
+  // Removed unused students state
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -13,16 +13,9 @@ function Students() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch students from backend
-  const fetchStudents = () => {
-    fetch("https://school-backend-2-qiyf.onrender.com/api/students")
-      .then((res) => res.json())
-      .then((data) => setStudents(data));
-  };
+  // Removed unused fetchStudents function
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
+  // Removed unused useEffect for fetching students
 
   // Handle form input change
   const handleChange = (e: any) => {
@@ -51,7 +44,7 @@ function Students() {
         if (!res.ok) throw new Error(result.message || "Error");
         setMessage(result.message);
         setForm({ name: "", address: "", email: "", class: "", password: "", profile: null });
-        fetchStudents();
+  // Removed fetchStudents call
       })
       .catch(() => setMessage("Cannot add student. Please check your server is running and try again."))
       .finally(() => setLoading(false));
