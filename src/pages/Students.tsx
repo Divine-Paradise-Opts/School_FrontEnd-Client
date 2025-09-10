@@ -1,7 +1,9 @@
 import { useState } from "react";
 
+
+import { useRef } from "react";
+
 function Students() {
-  // Removed unused students state
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -12,10 +14,7 @@ function Students() {
   });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Removed unused fetchStudents function
-
-  // Removed unused useEffect for fetching students
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle form input change
   const handleChange = (e: any) => {
@@ -29,8 +28,13 @@ function Students() {
   // Handle form submit (with file upload)
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setLoading(true);
     setMessage("");
+    // Pre-submit validation for all fields
+    if (!form.name || !form.address || !form.email || !form.class || !form.password || !form.profile) {
+      setMessage("All fields are required.");
+      return;
+    }
+    setLoading(true);
     const data = new FormData();
     Object.entries(form).forEach(([key, value]) => {
       if (value) data.append(key, value as any);
@@ -44,9 +48,10 @@ function Students() {
         if (!res.ok) throw new Error(result.message || "Error");
         setMessage(result.message);
         setForm({ name: "", address: "", email: "", class: "", password: "", profile: null });
-  // Removed fetchStudents call
+        // Reset file input manually
+        if (fileInputRef.current) fileInputRef.current.value = "";
       })
-      .catch(() => setMessage("Cannot add student. Please check your server is running and try again."))
+      .catch((err) => setMessage(err.message || "Cannot add student. Please check your server is running and try again."))
       .finally(() => setLoading(false));
   };
 
@@ -65,7 +70,7 @@ function Students() {
         <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required style={{width:'100%',marginBottom:8,padding:8}} />
         <input name="class" type="text" placeholder="Class (e.g. JSS1)" value={form.class} onChange={handleChange} required style={{width:'100%',marginBottom:8,padding:8}} />
         <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required style={{width:'100%',marginBottom:8,padding:8}} />
-        <input name="profile" type="file" accept="image/*" onChange={handleChange} required style={{width:'100%',marginBottom:8,padding:8}} />
+  <input name="profile" type="file" accept="image/*" onChange={handleChange} required style={{width:'100%',marginBottom:8,padding:8}} ref={fileInputRef} />
         <button type="submit" style={{width:'100%',background:'#003366',color:'#fff',padding:10,border:'none',borderRadius:4}} disabled={loading}>{loading ? 'Registering...' : 'Register'}</button>
         {message && <p style={{color:'#003366',marginTop:8}}>{message}</p>}
       </form>
