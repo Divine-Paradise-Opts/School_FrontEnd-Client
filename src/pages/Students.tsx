@@ -46,10 +46,13 @@ function Students() {
       .then(async (res) => {
         const result = await res.json();
         if (!res.ok) throw new Error(result.message || "Error");
-        setMessage(result.message);
+        setMessage("Registration successful! Redirecting to login...");
         setForm({ name: "", address: "", email: "", class: "", password: "", profile: null });
         // Reset file input manually
         if (fileInputRef.current) fileInputRef.current.value = "";
+        setTimeout(() => {
+          window.location.href = "/student/login";
+        }, 2000);
       })
       .catch((err) => setMessage(err.message || "Cannot add student. Please check your server is running and try again."))
       .finally(() => setLoading(false));
