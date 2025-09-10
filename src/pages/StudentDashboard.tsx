@@ -21,7 +21,7 @@ function StudentDashboard() {
         <strong>Class:</strong> {student.class || student.className}<br/>
         <strong>Address:</strong> {student.address}
       </div>
-      <a href="/students" style={{
+      <a href="/students/list" style={{
         display:'inline-block',
         marginTop:'2rem',
         background:'#003366',

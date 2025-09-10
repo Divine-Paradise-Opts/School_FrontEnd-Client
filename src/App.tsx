@@ -51,7 +51,7 @@ function App() {
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           {/* Registration and List for admin/demo only */}
           <Route path="/students/register" element={<Students />} />
-          <Route path="/students" element={<StudentList />} />
+          <Route path="/students/list" element={<StudentList />} />
         </Routes>
       </div>
       <footer className="footer">
