@@ -84,7 +84,7 @@ function StudentList() {
   };
 
   if (loading) return <div>Loading students...</div>;
-  if (error) return <div style={{color:'red'}}>{error}</div>;
+  if (error) return <div style={{color:'red'}}>Failed to load students. Please check your internet connection or try again later.</div>;
 
   return (
     <div style={{maxWidth:'900px',margin:'2rem auto',background:'#fff',borderRadius:'8px',boxShadow:'0 2px 8px rgba(0,0,0,0.05)',padding:'2rem'}}>
@@ -108,7 +108,16 @@ function StudentList() {
               <tr key={s._id || i} style={{background:i%2?'#f0f6ff':'#fff'}}>
                 <td style={{padding:'0.5rem'}}>
                   {s.profilePic ? (
-                    <img src={s.profilePic.startsWith('/uploads') ? s.profilePic : `/uploads/${s.profilePic.replace(/^\/uploads\//, '')}`} alt="Profile" style={{width:'48px',height:'48px',borderRadius:'50%',objectFit:'cover'}} />
+                    <img 
+                      src={
+                        s.profilePic.startsWith('http')
+                          ? s.profilePic
+                          : `https://school-backend-2-qiyf.onrender.com${s.profilePic.startsWith('/uploads') ? s.profilePic : `/uploads/${s.profilePic.replace(/^\/uploads\//, '')}`}`
+                      }
+                      alt="Profile"
+                      style={{width:'48px',height:'48px',borderRadius:'50%',objectFit:'cover'}}
+                      onError={e => { (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=No+Photo&background=003366&color=fff&size=48'; }}
+                    />
                   ) : (
                     <span style={{color:'#aaa'}}>No Photo</span>
                   )}
@@ -154,7 +163,16 @@ function StudentList() {
             </button>
             <h3 style={{color:'#003366', marginBottom: 12}}>Student Details</h3>
             {selectedStudent.profilePic && (
-              <img src={selectedStudent.profilePic.startsWith('/uploads') ? selectedStudent.profilePic : `/uploads/${selectedStudent.profilePic.replace(/^\/uploads\//, '')}`} alt="profile" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid #003366', marginBottom: 12 }} />
+              <img 
+                src={
+                  selectedStudent.profilePic.startsWith('http')
+                    ? selectedStudent.profilePic
+                    : `https://school-backend-2-qiyf.onrender.com${selectedStudent.profilePic.startsWith('/uploads') ? selectedStudent.profilePic : `/uploads/${selectedStudent.profilePic.replace(/^\/uploads\//, '')}`}`
+                }
+                alt="profile"
+                style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid #003366', marginBottom: 12 }}
+                onError={e => { (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=No+Photo&background=003366&color=fff&size=80'; }}
+              />
             )}
             <div><strong>Name:</strong> {selectedStudent.name}</div>
             <div><strong>Email:</strong> {selectedStudent.email}</div>
